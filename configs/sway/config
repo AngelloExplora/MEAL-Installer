@@ -1,0 +1,9 @@
+# Config aislada de Sway para MEAL
+set $mod Mod4
+
+exec dms run
+
+bindsym $mod+Return exec kitty
+bindsym $mod+d exec fuzzel
+bindsym $mod+q kill
+bindsym $mod+m exec kitty -e meal-menu

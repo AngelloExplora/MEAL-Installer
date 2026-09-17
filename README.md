@@ -1,6 +1,6 @@
 # MEAL — Mezcla Explosiva Arch Linux (rama Manjaro)
 
-Scripts y configs propios para armar el stack MEAL sobre Manjaro: HyDE, Niri, Mango 🥭 y DankMaterialShell, todo bajo un solo usuario, cada entorno en su propia sesión aislada.
+Scripts y configs propios para armar el stack MEAL sobre Manjaro: HyDE, Niri, Sway, Mango 🥭 y DankMaterialShell, todo bajo un solo usuario, cada entorno en su propia sesión aislada.
 
 ## ⚠️ Sobre Omarchy
 
@@ -10,24 +10,31 @@ Omarchy **no está incluido** en este repo. Desde su rediseño más reciente pas
 
 ```
 scripts/
-  meal-instalador.sh    → instala HyDE + Niri + Mango + DMS (un solo sudo, auto-reinicio)
+  meal-instalador.sh    → instala HyDE + Niri + Sway + Mango + DMS (un solo sudo, auto-reinicio)
   renombrar-usuario.sh  → renombra un usuario existente a "USER" sin perder la contraseña
+  meal-menu.sh           → menú TUI (gum): instala herramientas de programador, muestra atajos
 configs/
-  niri/config.kdl        → autostart de DankMaterialShell para Niri
+  niri/config.kdl        → autostart de DMS + atajos de teclado MEAL
+  sway/config             → autostart de DMS + atajos de teclado MEAL
   mango/config.conf      → autostart de DankMaterialShell para Mango
 docs/
   guia-meal-instalador.md
   guia-ejecutar-script-omarchy-manjaro.md   → guía histórica (ya no aplica, se deja de referencia)
+  atajos-de-teclado.md   → tabla de atajos de teclado de MEAL
 ```
 
 ## Uso rápido
 
 ```bash
-git clone <url-de-tu-repo> meal
-cd meal
+git clone https://github.com/AngelloExplora/MEAL-Installer.git
+cd MEAL-Installer
 chmod +x scripts/*.sh
 ./scripts/meal-instalador.sh
 ```
+
+## Menú MEAL
+
+Tras instalar, el comando `meal-menu` queda disponible en cualquier terminal (y con `Super + M` en Niri/Sway). Deja elegir herramientas de programador para instalar (git, docker, lazygit, neovim, tmux, ripgrep, etc.) y ver la tabla de atajos de teclado — ver `docs/atajos-de-teclado.md`.
 
 ## Requisitos
 
@@ -41,4 +48,6 @@ Este repo no vendoriza (copia completa) los proyectos de terceros — solo refer
 
 - [HyDE](https://github.com/prasanthrangan/hyprdots) — dotfiles de Hyprland
 - [Niri](https://github.com/YaLTeR/niri) — compositor scrollable
-- [DankMaterialShell](https://github.com/AvengeMedia/DankMaterialShell) — shell para Wayland
+- [DankMaterialShell](https://danklinux.com/) — shell para Wayland
+- [Hyprland](https://hypr.land/) un estilo monito de Waybar
+- [Sway](https://swaywm.org/) — Sway es un compositor de Wayland de azulejos y un reemplazo de la caída para el Administrador de ventanas i3 para X11. Funciona con la configuración existente de i3 y soporta la mayoría de las características de i3, además de algunos extras.

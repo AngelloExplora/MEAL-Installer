@@ -1,1 +1,8 @@
 spawn-at-startup "dms" "run"
+
+binds {
+    Mod+Return { spawn "kitty"; }
+    Mod+D { spawn "fuzzel"; }
+    Mod+Q { close-window; }
+    Mod+M { spawn "kitty" "-e" "meal-menu"; }
+}

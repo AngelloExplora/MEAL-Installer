@@ -42,6 +42,12 @@ trap 'kill "$SUDO_KEEPALIVE_PID" 2>/dev/null' EXIT
 echo "==> Instalando prerrequisitos base..."
 sudo pacman -S --needed --noconfirm git base-devel timeshift
 sudo pacman -S --needed --noconfirm hyprland xdg-desktop-portal-hyprland
+sudo pacman -S --needed --noconfirm gum fuzzel kitty
+
+echo "==> Instalando el menú de MEAL (meal-menu)..."
+sudo install -Dm755 "$(dirname "$0")/meal-menu.sh" /usr/local/bin/meal-menu
+sudo mkdir -p /usr/local/share/meal
+sudo cp "$(dirname "$0")/../docs/atajos-de-teclado.md" /usr/local/share/meal/atajos-de-teclado.md
 
 echo "==> Sacando snapshot de Timeshift antes de continuar..."
 sudo timeshift --create --comments "antes de MEAL" || echo "   ⚠️  Timeshift no pudo crear snapshot, continuando de todas formas."
@@ -51,7 +57,7 @@ cd ~/meal-build
 
 # ---------- 2. HyDE en config aislada ----------
 echo ""
-echo "==> [1/3] HyDE (aislado en ~/.config-hyde)"
+echo "==> [1/4] HyDE (aislado en ~/.config-hyde)"
 echo "   ⚠️  HyDE modifica GRUB/SDDM globalmente sin importar el usuario."
 export XDG_CONFIG_HOME="$HOME/.config-hyde"
 mkdir -p "$XDG_CONFIG_HOME"
@@ -71,7 +77,7 @@ EOF
 
 # ---------- 3. Niri en config aislada ----------
 echo ""
-echo "==> [2/3] Niri (aislado en ~/.config-niri)"
+echo "==> [2/4] Niri (aislado en ~/.config-niri)"
 sudo pacman -S --needed --noconfirm niri xwayland-satellite
 mkdir -p ~/.config-niri/niri
 cp "$(dirname "$0")/../configs/niri/config.kdl" ~/.config-niri/niri/config.kdl 2>/dev/null || cat > ~/.config-niri/niri/config.kdl << 'EOF'
@@ -86,9 +92,26 @@ Exec=env XDG_CONFIG_HOME=%h/.config-niri niri-session
 Type=Application
 EOF
 
-# ---------- 4. Mango en config aislada (auto-detecta el paquete) ----------
+# ---------- 4. Sway en config aislada ----------
 echo ""
-echo "==> [3/3] Mango 🥭 (aislado en ~/.config-mango)"
+echo "==> [3/4] Sway (aislado en ~/.config-sway)"
+sudo pacman -S --needed --noconfirm sway
+mkdir -p ~/.config-sway/sway
+cp "$(dirname "$0")/../configs/sway/config" ~/.config-sway/sway/config 2>/dev/null || cat > ~/.config-sway/sway/config << 'EOF'
+exec dms run
+EOF
+
+cat << 'EOF' | sudo tee /usr/share/wayland-sessions/sway-meal.desktop > /dev/null
+[Desktop Entry]
+Name=Sway (MEAL)
+Comment=Sway + DankMaterialShell
+Exec=env XDG_CONFIG_HOME=%h/.config-sway sway
+Type=Application
+EOF
+
+# ---------- 5. Mango en config aislada (auto-detecta el paquete) ----------
+echo ""
+echo "==> [4/4] Mango 🥭 (aislado en ~/.config-mango)"
 MANGO_PKG=""
 for candidato in mango-wm-git mango-wm mangowc-git mangowc mango-git mango; do
     if yay -Si "$candidato" &>/dev/null; then
@@ -124,7 +147,7 @@ curl -fsSL https://install.danklinux.com | sh
 echo ""
 echo "======================================================"
 echo " ✅ Instalación completa."
-echo "    Sesiones disponibles en SDDM: HyDE / Niri / Mango (MEAL)"
+echo "    Sesiones disponibles en SDDM: HyDE / Niri / Sway / Mango (MEAL)"
 echo "    (Omarchy no aplica aquí — requiere su propia VM con ISO)"
 echo "======================================================"
 echo ""
