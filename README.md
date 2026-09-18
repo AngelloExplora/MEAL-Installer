@@ -34,7 +34,12 @@ chmod +x scripts/*.sh
 
 ## Menú MEAL
 
-Tras instalar, el comando `meal-menu` queda disponible en cualquier terminal (y con `Super + M` en Niri/Sway). Deja elegir herramientas de programador para instalar (git, docker, lazygit, neovim, tmux, ripgrep, etc.) y ver la tabla de atajos de teclado — ver `docs/atajos-de-teclado.md`.
+Tras instalar, el comando `meal-menu` queda disponible en cualquier terminal (y con `Super + M` en Niri/Sway). Opciones:
+
+- **Instalar aplicaciones** — por categoría: Programación (git, docker, lazygit, mise, jq, starship, fzf, zoxide, ripgrep, fd, bat, eza, etc.), Multimedia y contenido (OBS, Kdenlive, Obsidian, yt-dlp, etc.) y Sistema y utilidades (btop, fastfetch, screenshots).
+- **Ver atajos de teclado**
+- **Ver manual completo** (abre `docs/MANUAL.md` en GitHub)
+- **Buscar actualizaciones** (Hyprland/Sway/Niri/Mango/HyDE, con confirmación antes de aplicar)
 
 ## Requisitos
 

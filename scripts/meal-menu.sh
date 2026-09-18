@@ -11,41 +11,68 @@ if ! command -v gum &>/dev/null; then
     exit 1
 fi
 
-# Lista de herramientas: "paquete(s)|Descripción corta"
-TOOLS=(
-    "git|Control de versiones"
-    "docker docker-compose|Contenedores"
-    "lazygit|Cliente TUI para git"
-    "neovim|Editor de texto"
-    "tmux|Multiplexor de terminal"
-    "ripgrep|Búsqueda de texto rápida (rg)"
-    "fd|Buscador de archivos moderno"
-    "bat|cat con resaltado de sintaxis"
-    "eza|ls moderno"
-    "nodejs npm|JavaScript / Node"
-    "python python-pip|Python"
-    "btop|Monitor de sistema"
-)
+# Categorías de apps: cada línea "paquete(s)|Descripción"
+declare -A CATEGORIAS
+CATEGORIAS["Programación"]="git|Control de versiones
+docker docker-compose docker-buildx|Contenedores
+lazygit|Cliente TUI para git
+lazydocker|Cliente TUI para docker
+neovim|Editor de texto
+tmux|Multiplexor de terminal
+mise|Gestor de versiones (node/python/ruby...)
+jq|Procesador de JSON
+starship|Prompt de terminal
+fzf|Buscador difuso
+zoxide|cd inteligente
+ripgrep|Búsqueda de texto rápida (rg)
+fd|Buscador de archivos moderno
+bat|cat con resaltado de sintaxis
+eza|ls moderno
+dua-cli|Analizador de espacio en disco
+plocate|Búsqueda rápida de archivos
+tldr|Ejemplos rápidos de comandos
+nodejs npm|JavaScript / Node
+python python-pip|Python"
+
+CATEGORIAS["Multimedia y contenido"]="obs-studio|Grabación / streaming
+kdenlive|Editor de video
+pinta|Editor de imágenes simple
+localsend|Compartir archivos entre dispositivos
+yt-dlp|Descargador de videos
+moonlight-qt|Streaming de juegos
+obsidian|Notas"
+
+CATEGORIAS["Sistema y utilidades"]="btop|Monitor de sistema
+fastfetch|Info del sistema
+inxi|Info detallada de hardware
+ufw|Firewall simple
+nautilus gnome-disk-utility|Explorador de archivos y discos
+grim slurp wl-clipboard|Screenshots y portapapeles"
 
 ATAJOS_MD="$(dirname "$0")/../docs/atajos-de-teclado.md"
 [ -f "$ATAJOS_MD" ] || ATAJOS_MD="/usr/local/share/meal/atajos-de-teclado.md"
 
 instalar_herramientas() {
+    CATEGORIA=$(printf '%s\n' "${!CATEGORIAS[@]}" | gum choose --header="¿Qué categoría?")
+    [ -z "$CATEGORIA" ] && return
+
     LABELS=()
-    for t in "${TOOLS[@]}"; do
-        LABELS+=("${t#*|}")
-    done
+    while IFS='|' read -r pkg desc; do
+        [ -z "$pkg" ] && continue
+        LABELS+=("$desc")
+    done <<< "${CATEGORIAS[$CATEGORIA]}"
 
     SELECCION=$(printf '%s\n' "${LABELS[@]}" | gum choose --no-limit --header="Espacio para elegir, Enter para confirmar")
     [ -z "$SELECCION" ] && return
 
     PAQUETES=""
     while IFS= read -r sel; do
-        for t in "${TOOLS[@]}"; do
-            if [ "${t#*|}" == "$sel" ]; then
-                PAQUETES="$PAQUETES ${t%%|*}"
+        while IFS='|' read -r pkg desc; do
+            [ -z "$pkg" ] && continue
+            if [ "$desc" == "$sel" ]; then
+                PAQUETES="$PAQUETES $pkg"
             fi
-        done
+        done <<< "${CATEGORIAS[$CATEGORIA]}"
     done <<< "$SELECCION"
 
     gum confirm "¿Instalar:$PAQUETES ?" && sudo pacman -S --needed $PAQUETES
@@ -80,7 +107,7 @@ buscar_actualizaciones() {
 
     if [ -d ~/HyDE ]; then
         (cd ~/HyDE && git fetch -q 2>/dev/null)
-        if [ -d ~/HyDE ] && ! git -C ~/HyDE diff --quiet HEAD origin/HEAD 2>/dev/null; then
+        if ! git -C ~/HyDE diff --quiet HEAD origin/HEAD 2>/dev/null; then
             PENDIENTES="$PENDIENTES\nHyDE tiene cambios nuevos en su repositorio"
         fi
     fi
@@ -107,7 +134,7 @@ buscar_actualizaciones() {
 
 while true; do
     OPCION=$(gum choose \
-        "🛠️  Instalar herramientas de programador" \
+        "🛠️  Instalar aplicaciones" \
         "⌨️  Ver atajos de teclado" \
         "📖 Ver manual completo (GitHub)" \
         "🔄 Buscar actualizaciones" \
@@ -115,7 +142,7 @@ while true; do
         --header="=== MEAL — Menú principal ===")
 
     case "$OPCION" in
-        "🛠️  Instalar herramientas de programador") instalar_herramientas ;;
+        "🛠️  Instalar aplicaciones") instalar_herramientas ;;
         "⌨️  Ver atajos de teclado") ver_atajos ;;
         "📖 Ver manual completo (GitHub)") ver_manual_github ;;
         "🔄 Buscar actualizaciones") buscar_actualizaciones ;;
