@@ -1,4 +1,5 @@
 spawn-at-startup "dms" "run"
+spawn-at-startup "sh" "-c" "test -f ~/.meal-bienvenida-mostrada || kitty -e meal-bienvenida"
 
 binds {
     Mod+Return { spawn "kitty"; }

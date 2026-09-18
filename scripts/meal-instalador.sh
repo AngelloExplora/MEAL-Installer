@@ -19,15 +19,51 @@
 
 set -e
 
-if [ "$EUID" -eq 0 ]; then
-    echo "❌ No corras esto como root. Ejecútalo como tu usuario normal."
-    exit 1
-fi
-
 echo "======================================================"
 echo " MEAL - Instalador para Manjaro"
 echo "======================================================"
 echo ""
+
+# ==========================================================
+# FASE 1: Renombrado de usuario (correr como root/sudo)
+# ==========================================================
+# Por seguridad del sistema, un usuario no puede renombrarse
+# a sí mismo mientras tiene procesos activos. Por eso esta
+# fase corre aparte, como root, desde una TTY (Ctrl+Alt+F2)
+# con la sesión del usuario objetivo completamente cerrada.
+# ==========================================================
+if [ "$EUID" -eq 0 ]; then
+    echo "=== Fase 1: elegir tu nombre de usuario ==="
+    echo ""
+    echo "Usuarios disponibles en este sistema:"
+    awk -F: '$3>=1000 && $3<60000 {print "  - "$1}' /etc/passwd
+    echo ""
+    read -p "¿Cuál es tu usuario ACTUAL (el que quieres renombrar)?: " OLDNAME
+    read -p "¿Qué nombre nuevo quieres ponerle?: " NEWNAME
+
+    if ! id "$OLDNAME" &>/dev/null; then
+        echo "❌ No existe un usuario llamado '$OLDNAME'."
+        exit 1
+    fi
+    if pgrep -u "$OLDNAME" > /dev/null 2>&1; then
+        echo "❌ '$OLDNAME' todavía tiene procesos activos."
+        echo "   Cierra su sesión por completo (logout, no solo bloquear) e inténtalo de nuevo."
+        exit 1
+    fi
+
+    usermod -l "$NEWNAME" "$OLDNAME"
+    usermod -d "/home/$NEWNAME" -m "$NEWNAME"
+    groupmod -n "$NEWNAME" "$OLDNAME" 2>/dev/null || true
+
+    echo ""
+    echo "✅ Listo: $OLDNAME → $NEWNAME (misma contraseña)."
+    echo "   Inicia sesión como '$NEWNAME' y vuelve a correr este mismo script para instalar todo."
+    exit 0
+fi
+
+# ==========================================================
+# FASE 2: Instalación (correr como usuario normal, con sudo)
+# ==========================================================
 echo "Va a pedir tu contraseña de sudo UNA sola vez."
 echo "Todo lo demás corre solo, sin más preguntas."
 echo ""
@@ -38,14 +74,26 @@ sudo -v
 SUDO_KEEPALIVE_PID=$!
 trap 'kill "$SUDO_KEEPALIVE_PID" 2>/dev/null' EXIT
 
+# ---------- 0.1 Idioma del sistema ----------
+echo ""
+echo "==> ¿Qué idioma quieres para el sistema?"
+IDIOMA=$(gum choose "Español (Perú)" "Español (España)" "English (US)" "Saltar, lo configuro después" 2>/dev/null || echo "Saltar, lo configuro después")
+case "$IDIOMA" in
+    "Español (Perú)") sudo localectl set-locale LANG=es_PE.UTF-8; sudo localectl set-keymap la-latin1 2>/dev/null || true ;;
+    "Español (España)") sudo localectl set-locale LANG=es_ES.UTF-8 ;;
+    "English (US)") sudo localectl set-locale LANG=en_US.UTF-8 ;;
+    *) echo "   Saltado. Cámbialo luego con: sudo localectl set-locale LANG=xx_XX.UTF-8" ;;
+esac
+
 # ---------- 1. Prerrequisitos comunes ----------
 echo "==> Instalando prerrequisitos base..."
 sudo pacman -S --needed --noconfirm git base-devel timeshift
 sudo pacman -S --needed --noconfirm hyprland xdg-desktop-portal-hyprland
-sudo pacman -S --needed --noconfirm gum fuzzel kitty
+sudo pacman -S --needed --noconfirm gum fuzzel kitty xdg-utils
 
-echo "==> Instalando el menú de MEAL (meal-menu)..."
+echo "==> Instalando el menú de MEAL (meal-menu) y la bienvenida..."
 sudo install -Dm755 "$(dirname "$0")/meal-menu.sh" /usr/local/bin/meal-menu
+sudo install -Dm755 "$(dirname "$0")/meal-bienvenida.sh" /usr/local/bin/meal-bienvenida
 sudo mkdir -p /usr/local/share/meal
 sudo cp "$(dirname "$0")/../docs/atajos-de-teclado.md" /usr/local/share/meal/atajos-de-teclado.md
 

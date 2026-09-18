@@ -2,6 +2,7 @@
 set $mod Mod4
 
 exec dms run
+exec sh -c 'test -f ~/.meal-bienvenida-mostrada || kitty -e meal-bienvenida'
 
 bindsym $mod+Return exec kitty
 bindsym $mod+d exec fuzzel
