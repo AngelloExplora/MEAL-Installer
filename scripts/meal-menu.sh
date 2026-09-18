@@ -14,6 +14,7 @@ fi
 # Categorías de apps: cada línea "paquete(s)|Descripción"
 declare -A CATEGORIAS
 CATEGORIAS["Programación"]="git|Control de versiones
+AUR:visual-studio-code-bin|Visual Studio Code
 docker docker-compose docker-buildx|Contenedores
 lazygit|Cliente TUI para git
 lazydocker|Cliente TUI para docker
@@ -42,7 +43,9 @@ yt-dlp|Descargador de videos
 moonlight-qt|Streaming de juegos
 obsidian|Notas"
 
-CATEGORIAS["Sistema y utilidades"]="btop|Monitor de sistema
+CATEGORIAS["Sistema y utilidades"]="firefox|Navegador
+gparted|Editor de particiones
+btop|Monitor de sistema
 fastfetch|Info del sistema
 inxi|Info detallada de hardware
 ufw|Firewall simple
@@ -65,17 +68,32 @@ instalar_herramientas() {
     SELECCION=$(printf '%s\n' "${LABELS[@]}" | gum choose --no-limit --header="Espacio para elegir, Enter para confirmar")
     [ -z "$SELECCION" ] && return
 
-    PAQUETES=""
+    PAQUETES_PACMAN=""
+    PAQUETES_AUR=""
     while IFS= read -r sel; do
         while IFS='|' read -r pkg desc; do
             [ -z "$pkg" ] && continue
             if [ "$desc" == "$sel" ]; then
-                PAQUETES="$PAQUETES $pkg"
+                if [[ "$pkg" == AUR:* ]]; then
+                    PAQUETES_AUR="$PAQUETES_AUR ${pkg#AUR:}"
+                else
+                    PAQUETES_PACMAN="$PAQUETES_PACMAN $pkg"
+                fi
             fi
         done <<< "${CATEGORIAS[$CATEGORIA]}"
     done <<< "$SELECCION"
 
-    gum confirm "¿Instalar:$PAQUETES ?" && sudo pacman -S --needed $PAQUETES
+    RESUMEN="${PAQUETES_PACMAN}${PAQUETES_AUR}"
+    gum confirm "¿Instalar:$RESUMEN ?" || return
+
+    [ -n "$PAQUETES_PACMAN" ] && sudo pacman -S --needed $PAQUETES_PACMAN
+    if [ -n "$PAQUETES_AUR" ]; then
+        if command -v yay &>/dev/null; then
+            yay -S --needed $PAQUETES_AUR
+        else
+            echo "⚠️  Falta 'yay' para instalar:$PAQUETES_AUR (son paquetes de AUR)"
+        fi
+    fi
     gum style --foreground 212 "✅ Listo."
 }
 
