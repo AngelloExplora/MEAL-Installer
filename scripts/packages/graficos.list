@@ -1,0 +1,10 @@
+mesa|OBLIGATORIO
+vulkan-icd-loader|OBLIGATORIO
+# Los siguientes van segun hardware detectado (Fase 12/13), no todos a la vez:
+vulkan-intel|OPCIONAL
+intel-media-driver|OPCIONAL
+xf86-video-amdgpu|OPCIONAL
+vulkan-radeon|OPCIONAL
+nvidia|OPCIONAL
+nvidia-utils|OPCIONAL
+nvidia-open|OPCIONAL

@@ -1,0 +1,4 @@
+bluez|OPCIONAL
+bluez-utils|OPCIONAL
+brightnessctl|OPCIONAL
+# tlp NO se incluye: conflicta con power-profiles-daemon (ya RECOMENDADO), mismo problema que auto-cpufreq

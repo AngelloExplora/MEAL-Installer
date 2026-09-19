@@ -1,0 +1,6 @@
+xdg-desktop-portal|RECOMENDADO
+# el portal especifico se agrega segun el escritorio elegido (Fase 5/9/10/11):
+xdg-desktop-portal-kde|OPCIONAL
+xdg-desktop-portal-hyprland|OPCIONAL
+xdg-desktop-portal-gnome|OPCIONAL
+xdg-desktop-portal-gtk|OPCIONAL

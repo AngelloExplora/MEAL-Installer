@@ -1,0 +1,8 @@
+base-devel|OPCIONAL
+gcc|OPCIONAL
+make|OPCIONAL
+cmake|OPCIONAL
+python|OPCIONAL
+nodejs|OPCIONAL
+npm|OPCIONAL
+docker|OPCIONAL
