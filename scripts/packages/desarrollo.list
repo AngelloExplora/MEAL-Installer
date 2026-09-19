@@ -6,3 +6,8 @@ python|OPCIONAL
 nodejs|OPCIONAL
 npm|OPCIONAL
 docker|OPCIONAL
+lazygit|OPCIONAL
+lazydocker|OPCIONAL
+mise|OPCIONAL
+neovim|OPCIONAL
+tmux|OPCIONAL

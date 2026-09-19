@@ -1,0 +1,12 @@
+plasma-desktop|OBLIGATORIO
+sddm|OBLIGATORIO
+konsole|OBLIGATORIO
+dolphin|OBLIGATORIO
+kde-gtk-config|RECOMENDADO
+xdg-desktop-portal-kde|RECOMENDADO
+ark|RECOMENDADO
+kcalc|RECOMENDADO
+kate|OPCIONAL
+okular|OPCIONAL
+spectacle|OPCIONAL
+gwenview|OPCIONAL
