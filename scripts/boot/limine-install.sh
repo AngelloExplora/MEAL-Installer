@@ -37,7 +37,15 @@ timeout: 5
     cmdline: root=UUID=$UUID_RAIZ rw
     module_path: boot():/initramfs-linux.img
 
-# La entrada de MEAL Recovery se agrega en Fase 8, sin modificar este script.
+# MEAL Recovery (Fase 8): ruta real pendiente de confirmar en Fase 14 -
+# depende de donde termine viviendo el entorno de recovery en el disco
+# (particion propia / dentro de la ESP / imagen aparte - decision de
+# particionado, no de este script).
+/MEAL Recovery
+    protocol: linux
+    path: boot():/meal-recovery/vmlinuz-linux
+    cmdline: root=UUID=$UUID_RAIZ rw meal_recovery=1
+    module_path: boot():/meal-recovery/initramfs-linux.img
 LIMINECONF
 
 echo "MEAL Boot: intentando entrada NVRAM (no critico si falla)..."
