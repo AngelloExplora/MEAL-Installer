@@ -21,6 +21,12 @@ elegir_particion_raiz() {
 }
 
 instalar_meal() {
+    # NOTA: cada variante de MEAL (Arch / NixOS) vive en su propia imagen ISO,
+    # cada una con su settings.conf fijo (mismo patron que usa NixOS con sus
+    # ISOs separadas "nixos-gnome" / "nixos-plasma5" - confirmado, no un
+    # flag de calamares para elegir en runtime, que no pude verificar que exista).
+    # Por eso aqui solo se llama a calamares tal cual: la ISO donde corre esto
+    # ya trae metido el settings.conf correcto para su propia variante.
     if command -v calamares &>/dev/null; then
         calamares
     else
