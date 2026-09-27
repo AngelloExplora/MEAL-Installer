@@ -63,20 +63,28 @@ instalar_ryoku() {
         bash "$REPO_DIR/scripts/postinstall/ryoku-install.sh"
 }
 
+instalar_zaneyos() {
+    if [ ! -f /etc/NIXOS ]; then
+        meal_error_dialog "ZaneyOS es solo para la rama NixOS de MEAL."
+        return
+    fi
+    bash "$REPO_DIR/scripts/postinstall/zaneyos-install.sh"
+}
+
 meal_post_install_loop() {
     while true; do
-        OPCION=$(meal_menu "MEAL - Post-instalacion" \
-            "Opcionales de mi perfil" \
-            "Visual Studio Code (AUR)" \
-            "limine-mkinitcpio-hook (AUR)" \
-            "Ryoku Linux (sobre Hyprland/Niri/Mango)" \
-            "Salir")
+        local opciones=("Opcionales de mi perfil" "Visual Studio Code (AUR)" "limine-mkinitcpio-hook (AUR)" "Ryoku Linux (sobre Hyprland/Niri/Mango)")
+        [ -f /etc/NIXOS ] && opciones+=("ZaneyOS (Hyprland para NixOS)")
+        opciones+=("Salir")
+
+        OPCION=$(meal_menu "MEAL - Post-instalacion" "${opciones[@]}")
 
         case "$OPCION" in
             "Opcionales de mi perfil") instalar_opcionales_perfil ;;
             "Visual Studio Code (AUR)") instalar_vscode ;;
             "limine-mkinitcpio-hook (AUR)") instalar_limine_hook ;;
             "Ryoku Linux"*) instalar_ryoku ;;
+            "ZaneyOS"*) instalar_zaneyos ;;
             *) break ;;
         esac
     done
