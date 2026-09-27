@@ -73,6 +73,9 @@ case "$ESCRITORIO" in
     gnome)
         echo "MEAL: GNOME no necesita nada de este script."
         ;;
+    xfce)
+        echo "MEAL: XFCE no necesita nada de este script."
+        ;;
     *)
         echo "Escritorio desconocido: $ESCRITORIO" >&2
         exit 1
