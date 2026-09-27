@@ -1,0 +1,10 @@
+gnome-shell|OBLIGATORIO
+gdm|OBLIGATORIO
+nautilus|OBLIGATORIO
+gnome-control-center|OBLIGATORIO
+xdg-desktop-portal-gnome|RECOMENDADO
+gnome-terminal|RECOMENDADO
+gnome-text-editor|OPCIONAL
+totem|OPCIONAL
+gnome-music|OPCIONAL
+gnome-calculator|OPCIONAL
