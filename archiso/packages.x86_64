@@ -1,0 +1,21 @@
+# packages.x86_64 - paquetes del entorno EN VIVO (no del sistema instalado,
+# eso lo maneja scripts/packages/*.list durante el pacstrap real de Calamares)
+base
+linux
+linux-firmware
+mkinitcpio
+mkinitcpio-archiso
+systemd
+sudo
+networkmanager
+iwd
+parted
+gptfdisk
+dosfstools
+e2fsprogs
+btrfs-progs
+calamares
+git
+base-devel
+gum
+timeshift
