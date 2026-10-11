@@ -28,3 +28,20 @@ todo desarrollo nuevo. No se borra lo anterior.
 | `scripts/common.sh`, `logging.sh`, `preflight.sh` | No existian | Se crean ahora |
 | `bootstrap.sh` (raiz) | No existia | Se crea ahora, punto de entrada real |
 | `modules/` | No existe asi | Se evalua mas adelante, no bloquea Fase C |
+
+## Addendum 2026-10-11 — referencia Omakub
+
+Por pedido del usuario se usa Omakub (Ubuntu + GNOME, MIT segun su README; ver `THIRD-PARTY-NOTICES.md`) de dos formas:
+
+1. **Capa GNOME portada** (`scripts/postinstall/gnome-layer.sh`): retoma parcialmente GNOME, que estaba pausado,
+   solo en su capa de configuracion. El entorno activo del instalador sigue siendo Hyprland + DMS.
+2. **Referencia para el nucleo Hyprland + DMS**: de Omakub se tomo la idea de migraciones
+   (`scripts/lib/migrations.sh`, pensado para MEAL Gestor).
+
+Pendiente de esa segunda parte (no hecho): temas y menu. Antes hay que decidir como convive un sistema de temas
+con DMS (no esta verificado como maneja DMS el suyo) y que terminal usa Hyprland (los temas de Omakub traen
+`alacritty.toml`, no config de kitty).
+
+Pendiente de verificar en Arch real: compatibilidad de las 6 extensiones con la version de GNOME Shell que traiga
+Arch (las claves de gsettings solo se validaron contra los esquemas de GNOME 46 de Ubuntu 24.04), que paquete de Arch
+provee GTop para TopHat, y los IDs de los .desktop de gnome-favorites.list.

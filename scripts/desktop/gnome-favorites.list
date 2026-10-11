@@ -1,0 +1,10 @@
+# Apps favoritas del dock/dash de GNOME (logica de set-dock.sh de Omakub, MIT segun su README).
+# Solo se agregan las que tengan un .desktop instalado. Los IDs de abajo NO estan verificados
+# contra los .desktop reales de Arch: si alguno no existe, simplemente se omite.
+firefox.desktop
+org.gnome.Terminal.desktop
+org.gnome.Nautilus.desktop
+code.desktop
+md.obsidian.Obsidian.desktop
+steam.desktop
+org.gnome.Settings.desktop

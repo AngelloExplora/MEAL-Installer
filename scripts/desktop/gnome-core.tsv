@@ -1,0 +1,38 @@
+# Derivado de Omakub (https://github.com/basecamp/omakub, MIT segun su README).
+# Ver THIRD-PARTY-NOTICES.md. Formato: extension<TAB>esquema<TAB>clave<TAB>valor
+# 'extension' es '-' para ajustes del sistema, o el UUID de la extension (su esquema
+# se busca en ~/.local/share/gnome-shell/extensions/<uuid>/schemas, sin tocar /usr/share).
+# --- ajustes (de set-gnome-settings.sh) ---
+-	org.gnome.mutter	center-new-windows	true
+-	org.gnome.desktop.interface	monospace-font-name	CaskaydiaMono Nerd Font 10
+-	org.gnome.desktop.calendar	show-weekdate	true
+-	org.gnome.settings-daemon.plugins.power	ambient-enabled	false
+# --- ventanas, workspaces y atajos (de set-gnome-hotkeys.sh) ---
+# Omitidos a proposito: dash-to-dock.hot-keys (requiere esa extension), custom-keybindings
+# (Ulauncher/Flameshot/Alacritty/Chrome/ASDControl: apps que MEAL no instala) y switch-input-source
+# (solo existia para liberar Super+Espacio para Ulauncher).
+-	org.gnome.desktop.wm.keybindings	close	['<Super>w']
+-	org.gnome.desktop.wm.keybindings	maximize	['<Super>Up']
+-	org.gnome.desktop.wm.keybindings	begin-resize	['<Super>BackSpace']
+-	org.gnome.settings-daemon.plugins.media-keys	next	['<Shift>AudioPlay']
+-	org.gnome.desktop.wm.keybindings	toggle-fullscreen	['<Shift>F11']
+-	org.gnome.mutter	dynamic-workspaces	false
+-	org.gnome.desktop.wm.preferences	num-workspaces	6
+-	org.gnome.shell.keybindings	switch-to-application-1	['<Alt>1']
+-	org.gnome.shell.keybindings	switch-to-application-2	['<Alt>2']
+-	org.gnome.shell.keybindings	switch-to-application-3	['<Alt>3']
+-	org.gnome.shell.keybindings	switch-to-application-4	['<Alt>4']
+-	org.gnome.shell.keybindings	switch-to-application-5	['<Alt>5']
+-	org.gnome.shell.keybindings	switch-to-application-6	['<Alt>6']
+-	org.gnome.shell.keybindings	switch-to-application-7	['<Alt>7']
+-	org.gnome.shell.keybindings	switch-to-application-8	['<Alt>8']
+-	org.gnome.shell.keybindings	switch-to-application-9	['<Alt>9']
+-	org.gnome.desktop.wm.keybindings	switch-to-workspace-1	['<Super>1']
+-	org.gnome.desktop.wm.keybindings	switch-to-workspace-2	['<Super>2']
+-	org.gnome.desktop.wm.keybindings	switch-to-workspace-3	['<Super>3']
+-	org.gnome.desktop.wm.keybindings	switch-to-workspace-4	['<Super>4']
+-	org.gnome.desktop.wm.keybindings	switch-to-workspace-5	['<Super>5']
+-	org.gnome.desktop.wm.keybindings	switch-to-workspace-6	['<Super>6']
+# --- tema (de themes/set-gnome-theme.sh; solo modo oscuro) ---
+# No se porta Yaru ni los fondos de pantalla: Yaru es de Ubuntu y la licencia de las imagenes no esta confirmada.
+-	org.gnome.desktop.interface	color-scheme	prefer-dark

@@ -79,6 +79,11 @@ instalar_ryoku_nixos() {
     bash "$REPO_DIR/scripts/postinstall/ryoku-on-nixos-install.sh"
 }
 
+aplicar_capa_gnome() {
+    meal_confirm "Aplicar la capa GNOME (instala extensiones y cambia ajustes de tu usuario)?" && \
+        bash "$REPO_DIR/scripts/postinstall/gnome-layer.sh"
+}
+
 meal_post_install_loop() {
     while true; do
         local opciones=("Opcionales de mi perfil" "Visual Studio Code (AUR)" "limine-mkinitcpio-hook (AUR)" "Ryoku Linux (sobre Hyprland/Niri/Mango)")
@@ -86,6 +91,7 @@ meal_post_install_loop() {
             opciones+=("ZaneyOS (Hyprland para NixOS)")
             opciones+=("Ryoku on NixOS")
         fi
+        case "${XDG_CURRENT_DESKTOP:-}" in *GNOME*) opciones+=("Capa GNOME (extensiones, atajos, ajustes)") ;; esac
         opciones+=("Salir")
 
         OPCION=$(meal_menu "MEAL - Post-instalacion" "${opciones[@]}")
@@ -97,6 +103,7 @@ meal_post_install_loop() {
             "Ryoku Linux"*) instalar_ryoku ;;
             "ZaneyOS"*) instalar_zaneyos ;;
             "Ryoku on NixOS") instalar_ryoku_nixos ;;
+            "Capa GNOME"*) aplicar_capa_gnome ;;
             *) break ;;
         esac
     done

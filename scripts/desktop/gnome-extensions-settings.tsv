@@ -1,0 +1,29 @@
+# Derivado de Omakub (https://github.com/basecamp/omakub, MIT segun su README).
+# Ver THIRD-PARTY-NOTICES.md. Formato: extension<TAB>esquema<TAB>clave<TAB>valor
+# 'extension' es '-' para ajustes del sistema, o el UUID de la extension (su esquema
+# se busca en ~/.local/share/gnome-shell/extensions/<uuid>/schemas, sin tocar /usr/share).
+# Omitidos: tophat.* (su dependencia GTop en Arch no esta verificada, ver gnome-extensions.list)
+# y blur-my-shell.dash-to-dock.* (requieren la extension dash-to-dock, que este port no instala).
+tactile@lundal.io	org.gnome.shell.extensions.tactile	col-0	1
+tactile@lundal.io	org.gnome.shell.extensions.tactile	col-1	2
+tactile@lundal.io	org.gnome.shell.extensions.tactile	col-2	1
+tactile@lundal.io	org.gnome.shell.extensions.tactile	col-3	0
+tactile@lundal.io	org.gnome.shell.extensions.tactile	row-0	1
+tactile@lundal.io	org.gnome.shell.extensions.tactile	row-1	1
+tactile@lundal.io	org.gnome.shell.extensions.tactile	gap-size	32
+just-perfection-desktop@just-perfection	org.gnome.shell.extensions.just-perfection	animation	2
+just-perfection-desktop@just-perfection	org.gnome.shell.extensions.just-perfection	dash-app-running	true
+just-perfection-desktop@just-perfection	org.gnome.shell.extensions.just-perfection	workspace	true
+just-perfection-desktop@just-perfection	org.gnome.shell.extensions.just-perfection	workspace-popup	false
+blur-my-shell@aunetx	org.gnome.shell.extensions.blur-my-shell.appfolder	blur	false
+blur-my-shell@aunetx	org.gnome.shell.extensions.blur-my-shell.lockscreen	blur	false
+blur-my-shell@aunetx	org.gnome.shell.extensions.blur-my-shell.screenshot	blur	false
+blur-my-shell@aunetx	org.gnome.shell.extensions.blur-my-shell.window-list	blur	false
+blur-my-shell@aunetx	org.gnome.shell.extensions.blur-my-shell.panel	blur	false
+blur-my-shell@aunetx	org.gnome.shell.extensions.blur-my-shell.overview	blur	true
+blur-my-shell@aunetx	org.gnome.shell.extensions.blur-my-shell.overview	pipeline	pipeline_default
+space-bar@luchrioh	org.gnome.shell.extensions.space-bar.behavior	smart-workspace-names	false
+space-bar@luchrioh	org.gnome.shell.extensions.space-bar.shortcuts	enable-activate-workspace-shortcuts	false
+space-bar@luchrioh	org.gnome.shell.extensions.space-bar.shortcuts	enable-move-to-workspace-shortcuts	true
+space-bar@luchrioh	org.gnome.shell.extensions.space-bar.shortcuts	open-menu	@as []
+AlphabeticalAppGrid@stuarthayhurst	org.gnome.shell.extensions.alphabetical-app-grid	folder-order-position	end

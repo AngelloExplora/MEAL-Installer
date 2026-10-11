@@ -1,0 +1,10 @@
+# Derivado de Omakub (MIT segun su README), ver THIRD-PARTY-NOTICES.md.
+# UUIDs exactos de install/desktop/set-gnome-extensions.sh. Formato: uuid|NIVEL
+tactile@lundal.io|RECOMENDADO
+just-perfection-desktop@just-perfection|RECOMENDADO
+blur-my-shell@aunetx|RECOMENDADO
+space-bar@luchrioh|RECOMENDADO
+undecorate@sun.wxg@gmail.com|RECOMENDADO
+AlphabeticalAppGrid@stuarthayhurst|RECOMENDADO
+# PENDIENTE (no se instala): tophat@fflewddur.github.io - necesita la libreria GTop; Omakub la instala
+# con gir1.2-gtop-2.0 (Debian/Ubuntu) y en Arch no pude confirmar que paquete trae el typelib.
