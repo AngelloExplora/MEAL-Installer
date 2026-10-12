@@ -20,7 +20,7 @@ PARTICION_ESP_NUM="${MEAL_ESP_PART_NUM:?falta MEAL_ESP_PART_NUM, ej. 1}"
 ESP="$RAIZ/boot"
 
 echo "MEAL Boot: instalando limine..."
-arch-chroot "$RAIZ" pacman -S --needed --noconfirm limine
+arch-chroot "$RAIZ" pacman -S --needed --noconfirm limine efibootmgr
 
 mkdir -p "$ESP/EFI/BOOT"
 cp "$RAIZ/usr/share/limine/BOOTX64.EFI" "$ESP/EFI/BOOT/BOOTX64.EFI"
